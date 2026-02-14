@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Harleen ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ffd6e0,#f3e5ff);
+}
+.heart{
+  position:fixed;
+  bottom:-20px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  to{ transform:translateY(-110vh); }
+}
+.screen{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
+.card{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  width:340px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  max-height:90vh;
+  overflow-y:auto;
+}
+h1,h2{
+  font-family:'Dancing Script', cursive;
+  color:#ff4d6d;
+}
+.btn{
+  padding:10px 18px;
+  margin:10px;
+  border:none;
+  border-radius:20px;
+  background:#ff8fab;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.btn:hover{ transform:scale(1.1); }
+.gif{
+  width:220px;
+  border-radius:12px;
+  margin:10px 0;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,80px);
+  gap:10px;
+  justify-content:center;
+}
+.cell{
+  width:80px;
+  height:80px;
+  background:#ffd6e0;
+  border-radius:12px;
+  font-size:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.lockbox{
+  background:#ffe4f0;
+  padding:15px;
+  border-radius:12px;
+  margin:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.lockbox:hover{ transform:scale(1.05); }
+
+.btn-row{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+</script>
+
+<div id="app" class="screen"></div>
+
+<script>
+const app=document.getElementById("app");
+const bgMusic=document.getElementById("bgMusic");
+bgMusic.volume=0.4;
+
+function start(){
+  bgMusic.play();
+  app.innerHTML=`
+    <div class="card">
+      <h2>Will you be my Valentine?</h2>
+      <img src="love.webp" class="gif">
+      <div class="btn-row">
+        <button class="btn" onclick="yes()">Yes 💖</button>
+        <button class="btn" onclick="no()">No 😅</button>
+      </div>
+    </div>`;
+}
+
+function no(){
+  app.innerHTML=`
+    <div class="card">
+      <h2>Please think again 🥺</h2>
+      <img src="angry-peachu-chasing-goma-angry-bird.webp" class="gif">
+      <p>This panda is requesting nicely...</p>
+      <button class="btn" onclick="start()">Okay, ask again</button>
+    </div>`;
+}
+
+function yes(){
+  app.innerHTML=`
+    <div class="card">
+      <h2>For You 🌸</h2>
+      <img src="dudu-giving-flowers-bubu-flowers.gif" class="gif">
+      <p>This panda is giving flowers only to you, Harleen 💐</p>
+      <button class="btn" onclick="memoryGame()">Continue 💕</button>
+    </div>`;
+}
+
+let score=0;
+function memoryGame(){
+  score=0;
+  app.innerHTML=`
+    <div class="card">
+      <h2>Find 3 Hearts 💗</h2>
+      <img src="peach-goma-peach-and-goma.gif" class="gif">
+      <div class="grid" id="grid"></div>
+    </div>`;
+  const grid=document.getElementById("grid");
+  for(let i=0;i<9;i++){
+    const cell=document.createElement("div");
+    cell.className="cell";
+    cell.onclick=function(){
+      if(Math.random()>0.5){
+        cell.innerHTML="💖";
+        score++;
+        if(score===3) openBoxes();
+      }else{
+        cell.innerHTML="✨";
+      }
+    };
+    grid.appendChild(cell);
+  }
+}
+
+let opened=0;
+function openBoxes(){
+  opened=0;
+  app.innerHTML=`
+  <div class="card">
+    <h2>Open These 😊</h2>
+    <img src="bobonchik-spin-sp.webp" class="gif">
+    <div class="lockbox" onclick="reveal(this,1)">👀 About Your Eyes</div>
+    <div class="lockbox" onclick="reveal(this,2)">😊 About Your Smile</div>
+    <div class="lockbox" onclick="reveal(this,3)">🥺 About Your Cuteness</div>
+  </div>`;
+}
+
+function reveal(el,type){
+  if(el.classList.contains("done")) return;
+
+  if(type===1){
+    el.innerHTML="<p>👀 Your eyes sparkle like tiny galaxies ✨<br><br>They hold warmth and kindness 💖<br><br>When you look at me, my world pauses 🥺<br><br>They speak emotions without words 💫<br><br>I could get lost in them forever 💞</p>";
+  }
+  if(type===2){
+    el.innerHTML="<p>😊 Your smile is pure sunshine ☀️<br><br>It melts every worry away 💕<br><br>It makes my heart beat faster 💓<br><br>Your smile is my favorite view 🌸<br><br>Please keep smiling forever 😘</p>";
+  }
+  if(type===3){
+    el.innerHTML="<p>🥺 Your cuteness is dangerously adorable 💗<br><br>The way you talk is so soft 🎀<br><br>Your little expressions are magical ✨<br><br>You don’t even try but you’re perfect 💕<br><br>You are my sweetest happiness 🌷</p>";
+  }
+
+  el.classList.add("done");
+  opened++;
+  if(opened===3) finalNote();
+}
+
+function finalNote(){
+  app.innerHTML=`
+  <div class="card">
+    <h2>A Little Piece Of My Heart 💌</h2>
+    <img src="hug.webp" class="gif">
+    <p>
+    Harleen… 💖<br><br>
+    One random Instagram conversation turned into something unexpectedly beautiful. 💫<br><br>
+    I didn’t plan to meet someone like you, but maybe destiny did. 🌸<br><br>
+    Your voice feels comforting, your smile feels safe, and your presence feels special. 🥺💞<br><br>
+    You turned an ordinary moment into a memory I’ll always cherish. ✨<br><br>
+    Maybe this is small… but feelings don’t need big reasons. 💕<br><br>
+    I’m just truly grateful that our paths crossed. 🌷<br><br>
+    And I hope whenever you remember this little website,  
+    it makes you smile… even just a little. 😊💖
+    </p>
+    <button class="btn" onclick="closeSite()">💗 Close</button>
+  </div>`;
+}
+
+function closeSite(){
+  app.innerHTML=`
+  <div class="card">
+    <h2>Thank You Harleen ❤️</h2>
+    <img src="love.webp" class="gif">
+    <p>Stay happy always, my favorite person 💕</p>
+  </div>`;
+}
+
+app.innerHTML=`
+<div class="card">
+  <h2>A Small Surprise For You</h2>
+  <img src="tkthao219-bubududu.gif" class="gif">
+  <button class="btn" onclick="start()">Open</button>
+</div>`;
+</script>
+
+</body>
+</html>
